@@ -11,7 +11,8 @@ import java.util.Objects;
 @Named
 @ApplicationScoped
 @Entity
-@Table(name="points", schema = "s368087")
+//@Table(name="points", schema = "s368087")
+@Table(name="points")
 public class Point implements Serializable {
     @Id
     @Column(name = "id")
