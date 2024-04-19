@@ -23,6 +23,13 @@ dependencies {
     implementation('org.glassfish.jaxb:jaxb-runtime:4.0.2')
     implementation 'org.primefaces:primefaces:13.0.0:jakarta'
     implementation('org.hibernate.validator:hibernate-validator:8.0.0.Final')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+}
+test {
+    useJUnitPlatform()
 }
 
 //task that takes all the files that would be in the war file, but copies them into a folder instead of creating the war
