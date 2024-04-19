@@ -1,15 +1,9 @@
 <project>
     <!--    properties-->
     <property name="dir.src" location="src"/>
-    <property name="dir.src.main" location="${dir.src}/main"/>
-    <property name="dir.src.test" location="${dir.src}/test"/>
     <property name="dir.build" location=".build"/>
     <property name="dir.classes" location="${dir.build}/classes"/>
-    <property name="dir.tests" location="${dir.build}/tests"/>
-    <property name="dir.test.result" location="${dir.build}/testsResult"/>
     <property name="dir.lib" value="lib"/>
-    <property name="dir.lib.main" location="${dir.lib}/main"/>
-    <property name="dir.lib.test" location="${dir.lib}/test"/>
     <property name="dir.main" location="${dir.src}/main"/>
     <property name="dir.resources" location="${dir.main}/resources"/>
     <property name="dir.webapp" location="${dir.main}/webapp"/>
