@@ -13,6 +13,7 @@
     <property name="dir.main" location="${dir.src}/main"/>
     <property name="dir.resources" location="${dir.main}/resources"/>
     <property name="dir.webapp" location="${dir.main}/webapp"/>
+    <property name="dir.report" location=".report"/>
 
     <!--    constants-->
     <property name="project.name" value="OPI_LAB_3"/>

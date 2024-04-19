@@ -12,8 +12,6 @@
         <pathelement location="${dir.tests}"/>
     </path>
 
-
-
     <!--    targets-->
     <target name="clean">
         <delete dir="${dir.build}"/>
@@ -74,5 +72,24 @@
         <xmlvalidate failonerror="true" lenient="true">
             <fileset dir="${dir.src}" includes="**/*.xml"/>
         </xmlvalidate>
+    </target>
+
+    <target name="report">
+        <antcall target="test"/>
+        <mkdir dir="${dir.report}"/>
+        <move todir="${dir.report}/">
+            <fileset dir="${dir.test.result}">
+                <include name="*.xml"/>
+            </fileset>
+        </move>
+        <exec executable="git" failonerror="true">
+            <arg value="add"/>
+            <arg value="${dir.report}"/>
+        </exec>
+        <exec executable="git" failonerror="true">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="Added JUnit report"/>
+        </exec>
     </target>
 </project>
