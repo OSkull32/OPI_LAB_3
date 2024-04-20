@@ -2,6 +2,9 @@ package ru.ifmo.web_lab_3;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -93,6 +96,19 @@ public class AreaResultTest {
                 }
 
             }
+        }
+    }
+
+    @Test
+    public void firstQuarterTest() {
+        Object[][] firstQuarterTests = {
+                {1.0,2.0,3.0, true},
+                {1.0,2.0,3.0, true},
+                {1.0,2.0,3.0, true},
+                {1.0,2.0,3.0, true},
+        };
+        for(Object[] o : firstQuarterTests) {
+            assertEquals(AreaChecker.isHit((double) o[0], (double) o[1], (double) o[2]), (boolean) o[3]);
         }
     }
 
