@@ -7,7 +7,8 @@
         <fileset dir="${dir.lib.main}" includes="*.jar"/>
     </path>
 
-    <path id="classpath.test">
+    <path id="classpath.test" >
+        <path refid="classpath.source"/>
         <fileset dir="${dir.lib.test}" includes="*.jar"/>
         <pathelement location="${dir.tests}"/>
     </path>
@@ -54,13 +55,22 @@
     </target>
 
     <target name="compileTest" depends="war">
-        <javac srcdir="${dir.src.test}" destdir="${dir.tests}" classpathref="classpath.test" includeantruntime="false"/>
+        <javac srcdir="${dir.src.test}" destdir="${dir.tests}" includeantruntime="false">
+            <classpath>
+                <pathelement location="${dir.classes}"/>
+                <path refid="classpath.test"/>
+            </classpath>
+        </javac>
     </target>
 
     <target name="test" depends="compileTest">
         <mkdir dir="${dir.test.result}"/>
         <junitlauncher printsummary="on" haltonfailure="yes">
-            <classpath refid="classpath.test"/>
+            <classpath>
+                <path refid="classpath.test"/>
+                <pathelement location="${dir.classes}"/>
+                <pathelement location="${dir.tests}"/>
+            </classpath>
             <testclasses outputdir="${dir.test.result}">
                 <fileset dir="${dir.tests}" includes="**/*.class" />
                 <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
