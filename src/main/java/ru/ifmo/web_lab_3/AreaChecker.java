@@ -1,8 +1,17 @@
 package ru.ifmo.web_lab_3;
 
 public class AreaChecker {
-    public static boolean isHit(double x, double y, double r) {
+public static boolean isHit(double x, double y, double r) {
+        if (x == Double.POSITIVE_INFINITY || y == Double.POSITIVE_INFINITY || r == Double.POSITIVE_INFINITY) {
+            throw new ArithmeticException("Infinity not possible");
+        }
+        if (x == Double.NEGATIVE_INFINITY || y == Double.NEGATIVE_INFINITY || r == Double.NEGATIVE_INFINITY) {
+            throw new ArithmeticException("Infinity not possible");
+        }
 
+        if (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(r)) {
+            throw new ArithmeticException("Nan not possible");
+        }
         return (isCircleZone(x, y, r) || isTriangleZone(x, y, r) || isRectangleZone(x, y, r));
     }
 
