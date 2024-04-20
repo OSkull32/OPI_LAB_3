@@ -32,7 +32,10 @@
 
 
     <target name="jar" depends="compile">
-        <jar destfile="${dir.build}/${project.name}_${project.version}.jar">
+        <manifest file="${dir.build}/META-INF/MANIFEST.MF">
+            <attribute name="Manifest-Version" value="1.0"/>
+        </manifest>
+        <jar manifest="${dir.build}/META-INF/MANIFEST.MF" destfile="${dir.build}/${project.name}_${project.version}.jar">
             <fileset dir="${dir.classes}"/>
             <fileset dir="${dir.webapp}"/>
             <fileset dir="${dir.resources}"/>
