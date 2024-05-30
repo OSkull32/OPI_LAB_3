@@ -1,14 +1,20 @@
 package ru.ifmo.web_lab_3.bd;
 
 import jakarta.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.ifmo.web_lab_3.Point;
+import ru.ifmo.web_lab_3.management.PointStatusObserver;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class CheckAreaDAOImpl implements CheckAreaDAO {
+
+    private final List<PointStatusObserver> pointStatusObservers = new ArrayList<>();
+
     @Override
     public void addNewResult(Point result) throws SQLException {
         Session session = null;
@@ -17,6 +23,8 @@ public class CheckAreaDAOImpl implements CheckAreaDAO {
             session.beginTransaction();
             session.persist(result);
             session.getTransaction().commit();
+
+            notifyObservers(result.isStatus());
         } catch (Throwable e) {
             System.err.println("Something went wrong in DAO: " + e);
             throw new SQLException(e);
@@ -118,6 +126,52 @@ public class CheckAreaDAOImpl implements CheckAreaDAO {
             if (session != null && session.isOpen()) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public long countPoints() throws SQLException {
+        Session session = null;
+        long count;
+        try {
+            session = HibernateUtils.getFactory().openSession();
+            count = session.createQuery("select count(*) from Point p", Long.class).uniqueResult();
+        } catch (HibernateException e) {
+            System.err.println("Something went wrong in DAO: " + e);
+            throw new SQLException(e);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public long countMissedPoints() throws SQLException {
+        Session session = null;
+        long count;
+        try {
+            session = HibernateUtils.getFactory().openSession();
+            count = session.createQuery("select count(*) from Point p where p.status = false", Long.class).uniqueResult();
+        } catch (HibernateException e) {
+            System.err.println("Something went wrong in DAO: " + e);
+            throw new SQLException(e);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return count;
+    }
+
+    public void addPointStatusObserver(PointStatusObserver observer) {
+        pointStatusObservers.add(observer);
+    }
+
+    private void notifyObservers(boolean status) {
+        for (var observer : pointStatusObservers) {
+            observer.updatePointStatus(status);
         }
     }
 }

@@ -12,4 +12,6 @@ public interface CheckAreaDAO {
     Collection<Point> getAllResults() throws SQLException;
     void deleteResult(Point result) throws SQLException;
     void clearResults() throws SQLException;
+    long countPoints() throws SQLException;
+    long countMissedPoints() throws SQLException;
 }
